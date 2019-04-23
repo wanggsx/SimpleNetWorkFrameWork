@@ -1,8 +1,10 @@
 package com.wanggsx.networkframework
 
+import java.io.InputStream
+
 interface CallbackListener {
 
-    fun onSuccess()
+    fun onSuccess(response : InputStream)
 
     fun onFail()
 
