@@ -2,9 +2,9 @@ package com.wanggsx.networkframework
 
 import java.io.InputStream
 
-interface CallbackListener {
+interface OnNetworkCallbackListener<T> {
 
-    fun onSuccess(response : InputStream)
+    fun onSuccess(t: T)
 
     fun onFail()
 
