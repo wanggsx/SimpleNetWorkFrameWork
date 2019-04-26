@@ -1,4 +1,4 @@
-package com.wanggsx.networkframework
+package com.wanggsx.networkframework.netframeset
 
 import java.util.concurrent.*
 
@@ -7,7 +7,8 @@ class ThreadPoolManager private constructor() {
     //定义静态成员变量和静态方法
     companion object {
 
-        private var mInstance : ThreadPoolManager = ThreadPoolManager()
+        private var mInstance : ThreadPoolManager =
+            ThreadPoolManager()
 
         public fun getInstance() : ThreadPoolManager {
             return mInstance
@@ -17,14 +18,7 @@ class ThreadPoolManager private constructor() {
     /** 不限制队列中Runnable对象的数量，最大数量为Integer.MAX_VALUE */
     var mQueueRunnables : LinkedBlockingDeque<Runnable> = LinkedBlockingDeque()
 
-    /**
-     * public ThreadPoolExecutor(int corePoolSize,
-    int maximumPoolSize,
-    long keepAliveTime,
-    TimeUnit unit,
-    BlockingQueue<Runnable> workQueue)
-     *
-     * */
+
     var mExecutor : ThreadPoolExecutor = ThreadPoolExecutor(3,9,
         30L, TimeUnit.SECONDS, ArrayBlockingQueue<Runnable>(3),
         RejectedExecutionHandler {

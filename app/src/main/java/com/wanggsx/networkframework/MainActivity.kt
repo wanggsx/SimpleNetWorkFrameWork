@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
+import com.wanggsx.networkframework.model.UserBean
+import com.wanggsx.networkframework.netframeset.HttpRequest
+import com.wanggsx.networkframework.netframeset.OnNetworkCallbackListener
+import com.wanggsx.networkframework.utils.UtilsHttp
 
 class MainActivity : AppCompatActivity() {
 

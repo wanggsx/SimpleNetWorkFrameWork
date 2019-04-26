@@ -1,4 +1,4 @@
-package com.wanggsx.networkframework
+package com.wanggsx.networkframework.netframeset
 
 import java.util.HashMap
 

@@ -1,13 +1,12 @@
-package com.wanggsx.networkframework
+package com.wanggsx.networkframework.netframeset
 
 import java.io.BufferedOutputStream
 import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.nio.charset.Charset
 
 class HttpRequest(
-     method : MethodType, url : String, data : RequestData, listener: HttpRequestCallbackListener
+    method : MethodType, url : String, data : RequestData, listener: HttpRequestCallbackListener
 ){
     lateinit var mConn : HttpURLConnection
     private var mMethod : MethodType = method

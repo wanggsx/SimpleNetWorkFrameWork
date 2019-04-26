@@ -1,6 +1,4 @@
-package com.wanggsx.networkframework
-
-import java.io.InputStream
+package com.wanggsx.networkframework.netframeset
 
 interface OnNetworkCallbackListener<T> {
 

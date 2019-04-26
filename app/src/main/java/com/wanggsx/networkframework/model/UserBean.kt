@@ -1,4 +1,4 @@
-package com.wanggsx.networkframework
+package com.wanggsx.networkframework.model
 
 /**
  * 获取首页数据
