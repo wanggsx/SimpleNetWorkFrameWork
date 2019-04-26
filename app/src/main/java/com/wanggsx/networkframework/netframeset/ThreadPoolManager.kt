@@ -1,5 +1,6 @@
 package com.wanggsx.networkframework.netframeset
 
+import android.util.Log
 import java.util.concurrent.*
 
 class ThreadPoolManager private constructor() {
@@ -20,31 +21,30 @@ class ThreadPoolManager private constructor() {
 
 
     var mExecutor : ThreadPoolExecutor = ThreadPoolExecutor(3,9,
-        30L, TimeUnit.SECONDS, ArrayBlockingQueue<Runnable>(3),
+        30L, TimeUnit.SECONDS, ArrayBlockingQueue<Runnable>(20),
         RejectedExecutionHandler {
             //当线程超过线程池最大数量时，会被拒绝执行，此时应该加入等待队列中
                 r, executor ->
-            addWaitingTask(r)
+//            addWaitingTask(r)
+            Log.d("wanggsxnetwork","RejectedExecutionHandler")
+            //executor.execute(r)
         })
 
-    /** 添加线程到队列中 */
-
-    fun addWaitingTask(r : Runnable){
-        mQueueRunnables.add(r)
-    }
-
-    var executorRunnable : Runnable = Runnable {
-
-        var mRunnable : Runnable? = null
-
-        kotlin.run {
-            while (true){
-                mRunnable = mQueueRunnables.take()
-                mExecutor.execute(mRunnable!!)
-            }
-        }
-
-    }
+//    /** 添加线程到队列中 */
+//
+//    fun addWaitingTask(r : Runnable){
+//        mQueueRunnables.add(r)
+//    }
+//
+//    var executorRunnable : Runnable = Runnable {
+//        var mRunnable : Runnable? = null
+//        kotlin.run {
+//            while (true){
+//                mRunnable = mQueueRunnables.take()
+//                mExecutor.execute(mRunnable!!)
+//            }
+//        }
+//    }
 
 
 
