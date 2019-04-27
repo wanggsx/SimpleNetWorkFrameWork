@@ -10,47 +10,34 @@ public class ThreadPoolExcutorDemo {
     private static int produceTaskMaxNumber = 20; //定义最大添加10个线程到线程池中
     public static void main(String[] args) {
         //构造一个线程池
-        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 4, 3,
-                TimeUnit. SECONDS, new ArrayBlockingQueue<Runnable>(3),
-                new ThreadPoolExecutor.DiscardOldestPolicy());
-        for( int i=1; i<= produceTaskMaxNumber;i++){
-            try {
-                //一个任务，并将其加入到线程池
-                String work= "work@ " + i;
-                System. out.println( "put ：" +work);
-                threadPool.execute( new ThreadPoolTask(work));
-                //便于观察，等待一段时间
-                Thread. sleep(produceTaskSleepTime);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 200, TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<Runnable>(5));
+
+        for(int i=0;i<15;i++){
+            MyTask myTask = new MyTask(i);
+            executor.execute(myTask);
+            System.out.println("线程池中线程数目："+executor.getPoolSize()+"，队列中等待执行的任务数目："+
+                    executor.getQueue().size()+"，已执行玩别的任务数目："+executor.getCompletedTaskCount());
         }
+        executor.shutdown();
     }
 
-    /**
-     * 线程池执行的任务
-     * @author zhu
-     */
-    public static class ThreadPoolTask implements Runnable,Serializable{
-        private static final long serialVersionUID = 0;
-        //保存任务所需要的数据
-        private Object threadPoolTaskData;
-        ThreadPoolTask(Object works){
-            this. threadPoolTaskData =works;
+     static class MyTask implements Runnable {
+        private int taskNum;
+
+        public MyTask(int num) {
+            this.taskNum = num;
         }
-        public void run(){
-            //处理一个任务，这里的处理方式太简单了，仅仅是一个打印语句
-            System. out.println( "start------"+threadPoolTaskData );
+
+        @Override
+        public void run() {
+            System.out.println("正在执行task "+taskNum);
             try {
-                //便于观察，等待一段时间
-                Thread. sleep(consumeTaskSleepTime);
-            } catch (Exception e) {
+                Thread.currentThread().sleep(4000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            threadPoolTaskData = null;
-        }
-        public Object getTask(){
-            return this. threadPoolTaskData;
+            System.out.println("task "+taskNum+"执行完毕");
         }
     }
 }
