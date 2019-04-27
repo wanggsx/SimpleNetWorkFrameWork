@@ -15,16 +15,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        runManyHttpRequest(100)
+        runManyHttpRequest(30)
     }
 
-    fun runManyHttpRequest(num : Int){
+    private fun runManyHttpRequest(num : Int){
         for (i in 1..num){
+            Thread.sleep(1000)
             runHttpRequest(i)
         }
     }
 
-    fun runHttpRequest(flag : Int){
+    private fun runHttpRequest(flag : Int){
         //组装请求参数
         var params = HashMap<String,Any>()
         params.put("userid",1007)
