@@ -14,7 +14,7 @@ class HttpRequest(
     private var mData : RequestData = data
     private var mListener: HttpRequestCallbackListener = listener
 
-    fun execute() {
+    fun doRequest() {
         var url = URL(mUrl)
         mConn = url.openConnection() as HttpURLConnection
         mConn.connectTimeout = 30000

@@ -1,6 +1,7 @@
 package com.wanggsx.networkframework.netframeset
 
 import android.os.Looper
+import android.util.Log
 import com.google.gson.Gson
 import java.io.InputStream
 import java.lang.Exception
@@ -36,8 +37,10 @@ class HttpTask<T>(method : HttpRequest.MethodType, url : String, mapHeader : Map
 
 
     override fun run() {
+        Log.d("wanggsxnetwork", "start run")
         Looper.prepare()
-        mRequest.execute()
+        mRequest.doRequest()
+        Log.d("wanggsxnetwork", "end run")
     }
 
 }
