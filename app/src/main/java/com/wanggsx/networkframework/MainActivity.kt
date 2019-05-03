@@ -16,14 +16,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Thread(Runnable {
-            runManyHttpRequest(100)
+            for (i in 1..100){
+                runHttpRequest(i)
+            }
         }).start()
-    }
-
-    private fun runManyHttpRequest(num : Int){
-        for (i in 1..num){
-            runHttpRequest(i)
-        }
     }
 
     private fun runHttpRequest(flag : Int){
