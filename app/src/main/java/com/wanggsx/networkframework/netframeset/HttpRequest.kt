@@ -1,9 +1,11 @@
 package com.wanggsx.networkframework.netframeset
 
+import android.content.Context
 import java.io.BufferedOutputStream
 import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.logging.Handler
 
 class HttpRequest(
     method : MethodType, url : String, data : RequestData, listener: HttpRequestCallbackListener

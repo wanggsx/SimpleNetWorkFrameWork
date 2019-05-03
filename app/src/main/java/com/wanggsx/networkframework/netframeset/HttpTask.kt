@@ -1,5 +1,6 @@
 package com.wanggsx.networkframework.netframeset
 
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.google.gson.Gson
@@ -23,9 +24,13 @@ class HttpTask<T>(method : HttpRequest.MethodType, url : String, mapHeader : Map
                         var responseByte = inputStream.readBytes()
                         var responseObject =
                             Gson().fromJson<T>(String(responseByte, Charset.forName("utf-8")), reponseClass)
-                        listener.onSuccess(responseObject)
+                        Handler(Looper.getMainLooper()).post {
+                            listener.onSuccess(responseObject)
+                        }
                     } catch (e: Exception) {
-                        listener.onFail()
+                        Handler(Looper.getMainLooper()).post {
+                            listener.onFail()
+                        }
                     }
                 }
 
@@ -37,10 +42,9 @@ class HttpTask<T>(method : HttpRequest.MethodType, url : String, mapHeader : Map
 
 
     override fun run() {
-        Log.d("wanggsxnetwork", "start run")
-        Looper.prepare()
+        Log.d("wanggsxnetwork", "start run " + Thread.currentThread().name)
         mRequest.doRequest()
-        Log.d("wanggsxnetwork", "end run")
+        Log.d("wanggsxnetwork", "end run " + Thread.currentThread().name)
     }
 
 }

@@ -15,12 +15,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        runManyHttpRequest(30)
+        Thread(Runnable {
+            runManyHttpRequest(100)
+        }).start()
     }
 
     private fun runManyHttpRequest(num : Int){
         for (i in 1..num){
-            Thread.sleep(1000)
             runHttpRequest(i)
         }
     }
@@ -38,12 +39,11 @@ class MainActivity : AppCompatActivity() {
             UserBean::class.java,
             object : OnNetworkCallbackListener<UserBean> {
                 override fun onSuccess(t: UserBean) {
-                    Toast.makeText(this@MainActivity,t.msg,Toast.LENGTH_LONG).show()
                     Log.d("wanggsxnetwork","onSuccess msg:" + t.msg + " code:" + t.code + " 第" + flag + "个线程")
+                    Toast.makeText(this@MainActivity,"OK",Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onFail() {
-                    Toast.makeText(this@MainActivity,"网络请求失败",Toast.LENGTH_LONG).show()
                     Log.d("wanggsxnetwork","onFail" + " 第" + flag + "个线程")
                 }
 

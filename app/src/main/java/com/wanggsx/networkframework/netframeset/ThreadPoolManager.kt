@@ -16,8 +16,8 @@ class ThreadPoolManager private constructor() {
         }
     }
 
-    /** 不限制队列中Runnable对象的数量，最大数量为Integer.MAX_VALUE */
-    var mQueueRunnables: LinkedBlockingDeque<Runnable> = LinkedBlockingDeque()
+    /** 这里要限制队列中Runnable对象的最大数量，否则会造成OOM（默认值为Integer.MAX_VALUE） */
+    var mWattingQueueRunnables: LinkedBlockingDeque<Runnable> = LinkedBlockingDeque(20)
 
 
     /**
@@ -51,33 +51,11 @@ class ThreadPoolManager private constructor() {
      * */
     var mExecutor: ThreadPoolExecutor = ThreadPoolExecutor(
         3,
-        9,
-        2L,
-        TimeUnit.SECONDS,
-        LinkedBlockingDeque<Runnable>(20),
-        RejectedExecutionHandler {
-            //当线程超过线程池最大数量时，会被拒绝执行，此时应该加入等待队列中
-                r, executor ->
-            //            addWaitingTask(r)
-            Log.d("wanggsxnetwork", "RejectedExecutionHandler")
-        }
+        5,
+        200L,
+        TimeUnit.MILLISECONDS,
+        mWattingQueueRunnables,
+        ThreadPoolExecutor.CallerRunsPolicy()//把所有的任务都交由当前线程池来执行
     )
-
-//    /** 添加线程到队列中 */
-//
-//    fun addWaitingTask(r : Runnable){
-//        mQueueRunnables.add(r)
-//    }
-//
-//    var executorRunnable : Runnable = Runnable {
-//        var mRunnable : Runnable? = null
-//        kotlin.run {
-//            while (true){
-//                mRunnable = mQueueRunnables.take()
-//                mExecutor.execute(mRunnable!!)
-//            }
-//        }
-//    }
-
 
 }
